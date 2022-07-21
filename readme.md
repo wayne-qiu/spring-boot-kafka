@@ -1,20 +1,11 @@
-https://www.baeldung.com/spring-boot-kafka-streams
+This's demo for kafka streams project:
+- spring boot + spring for apache kafka + kafka streams
+- avro support
+- streams joined by timewindows
 
-- basickafkatemplate  
-    application.properties
-- streams  
-    - @EnableKafkaStreams
-    - @Component
-    @Profile(value={"stream"})
-    class Consumer {
-    - run directly
-    - https://www.baeldung.com/spring-boot-kafka-streams
-- avro
-    - application.properties
-        spring.profiles.active=avro
-    - xxx.avsc
-      - generated code `Hobbit`
-      - ConsumerRecord<Integer, Hobbit>
-    - https://www.confluent.io/blog/schema-registry-avro-in-spring-boot-application-tutorial/
+next step:
+- reliability enhance
+- exception handler
+- unit test
 
 
