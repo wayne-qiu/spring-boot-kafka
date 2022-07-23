@@ -55,7 +55,3 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-springBoot {
-	mainClass = "com.atome.springkafka.streams.SpringKafkaStreamApplication"
-}
