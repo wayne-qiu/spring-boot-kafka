@@ -45,6 +45,7 @@ class KafkaConfig {
                 .replicas(3)
                 .build();
     }
+
     @Bean
     NewTopic balance() {
         return TopicBuilder.name("Balance")
@@ -61,19 +62,19 @@ class KafkaConfig {
                 .build();
     }
     @Autowired
-    ProducerFactory  producerFactory;
+    ProducerFactory<?, ?>  producerFactory;
 
     @Bean
     @Qualifier("customerKafkaTemplate")
-    public KafkaTemplate<String, Customer> customerKafkaTemplate() {
-        KafkaTemplate<String, Customer> kafkaTemplate = new KafkaTemplate<>(producerFactory);
+    public KafkaTemplate<?, ?> customerKafkaTemplate() {
+        KafkaTemplate<?, ?> kafkaTemplate = new KafkaTemplate<>(producerFactory);
         return kafkaTemplate;
     }
 
     @Bean
     @Qualifier("balanceKafkaTemplate")
-    public KafkaTemplate<String, Balance> balanceKafkaTemplate() {
-        KafkaTemplate<String, Balance> kafkaTemplate = new KafkaTemplate<>(producerFactory);
+    public KafkaTemplate<?, ?> balanceKafkaTemplate() {
+        KafkaTemplate<?, ?> kafkaTemplate = new KafkaTemplate<>(producerFactory);
         return kafkaTemplate;
     }
 }
@@ -108,13 +109,12 @@ class Producer {
 
         System.out.println("sent......");
     }
-
 }
-
 
 @Component
 class Consumer {
     @KafkaListener(topics = {"CustomerBalance"}, groupId = "spring-boot-kafka")
+//    @Transactional
     public void consume(ConsumerRecord<String, CustomerBalance> record) {
         System.out.println("received......");
         System.out.println("received = " + record.value() + " with key " + record.key());
@@ -123,14 +123,12 @@ class Consumer {
 
 @Component
 class Processor {
-
     @Autowired
     public void process(StreamsBuilder builder) {
         System.out.println("stream.....");
 
         KStream<String, Customer> customerStream = builder.stream("Customer");
         KStream<String, Balance> balanceStream = builder.stream("Balance");
-
 
         KStream<String, CustomerBalance> joinedKStream = customerStream.selectKey((k,v)->{
             return v.getAccountId();
