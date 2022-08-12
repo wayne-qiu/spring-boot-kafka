@@ -10,12 +10,12 @@ group = 'com.atome'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 //https://github.com/DiUS/java-faker
-javafaker = '1.0.2'
+def javafaker = '1.0.2'
 //https://avro.apache.org/docs/current/
-avro = '1.11.0'
+def avro = '1.11.0'
 //https://docs.confluent.io/platform/current/release-notes/index.html
 //https://docs.confluent.io/platform/current/installation/versions-interoperability.html
-kafka = '7.2.1'
+def kafka = '7.2.1'
 
 configurations {
 	compileOnly {
